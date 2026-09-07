@@ -29,6 +29,10 @@ select dbms_random.random() as from_text_seed;
 call dbms_random.seed(cast(7 as number));
 select dbms_random.value() >= 0 and dbms_random.value() < 1 as value_in_unit_range;
 
+-- VALUE can be used without parentheses as an ORDER BY expression
+call dbms_random.seed(cast(42 as number));
+select n from generate_series(1, 5) as t(n) order by dbms_random.value;
+
 -- VALUE(low, high) stays within the requested bounds
 call dbms_random.seed(cast(99 as number));
 select min(v) >= 10 and max(v) < 20 as range_ok
